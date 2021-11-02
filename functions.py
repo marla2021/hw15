@@ -50,13 +50,26 @@ def animal_by_id(itemid):
     cur.execute(query10)
     cur.execute(query11)
     cur.execute(query12)
+    result = cur.fetchall()
+    con.close()
+    return result
+
+
+def animal_by_id(itemid):
+    con = sqlite3.connect("animal.db")
+    cur = con.cursor()
+    query13 = f'''SELECT age_upon_outcome, animal_id, animal_types.name, breed.name, date_of_birth 
+                     FROM animals_new 
+                     LEFT JOIN breed on animals_new.breed_id = breed.id
+                     LEFT JOIN animal_types on animals_new.type_id = animal_types.id
+                     WHERE animals_new.id = {itemid}'''
     cur.execute(query13)
     result = cur.fetchall()
     con.close()
-    result_dict = {
+    result = {
         "age_upon": result[0][1],
         "animal_id": result[0][2],
         "name": result[0][3],
         "breed": result[0][4],
     }
-    return result_dict
+    return result
