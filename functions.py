@@ -32,12 +32,6 @@ def animal_table(itemid):
                  LEFT JOIN outcomes on animals.outcome_subtype = outcomes.outcome_subtype
                  AND animals.outcome_month = outcomes.outcome_month
                  AND animals.outcome_year = outcomes.outcome_year'''
-    query13 = f'''SELECT age_upon_outcome, animal_id, animal_types.name, breed.name, date_of_birth 
-                 FROM animals_new 
-                 LEFT JOIN breed on animals_new.breed_id = breed.id
-                 LEFT JOIN animal_types on animals_new.type_id = animal_types.id
-                 WHERE animals_new.id = {itemid}'''
-
     cur.execute(query1)
     cur.execute(query2)
     cur.execute(query3)
