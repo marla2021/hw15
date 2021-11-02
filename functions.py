@@ -1,7 +1,7 @@
 import sqlite3
+from flask import abort
 
-
-def animal_by_id(itemid):
+def animal_table(itemid):
     con = sqlite3.connect("animal.db")
     cur = con.cursor()
     query1 = '''CREATE TABLE colors (
@@ -64,7 +64,7 @@ def animal_by_id(itemid):
                      LEFT JOIN animal_types on animals_new.type_id = animal_types.id
                      WHERE animals_new.id = {itemid}'''
     cur.execute(query13)
-    result = cur.fetchall()
+    result = cur.fetchone()
     con.close()
     result = {
         "age_upon": result[0][1],
@@ -72,4 +72,6 @@ def animal_by_id(itemid):
         "name": result[0][3],
         "breed": result[0][4],
     }
+    if not result:
+        abort, 404
     return result
